@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת ניהול קורסים מתקדמת</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #f97316;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Segoe UI', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--secondary), #1e293b);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        /* Courses Table */
+        .courses-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .courses-table th {
+            background: var(--secondary);
+            color: white;
+            text-align: right;
+            padding: 1rem;
+        }
+
+        .courses-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .courses-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status.completed {
+            background: rgba(15, 23, 42, 0.1);
+            color: var(--secondary);
+        }
+
+        /* Calendar */
+        .calendar {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .calendar-day:hover {
+            background: var(--background);
+            cursor: pointer;
+        }
+
+        .calendar-day.has-event {
+            background: rgba(37, 99, 235, 0.1);
+            position: relative;
+        }
+
+        .calendar-day.has-event::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>מערכת ניהול קורסים</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> דף הבית</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> קורסים</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> תלמידים</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> דוחות</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> הגדרות</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>מערכת ניהול קורסים מתקדמת</h2>
+            <p>ניהול יעיל של קורסים, תלמידים וה-resources האקדמיים במקום אחד</p>
+            <a href="#" class="btn"><i class="fas fa-plus-circle"></i> צור קורס חדש</a>
+        </div>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <section class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-book fa-2x"></i>
+                <div class="stat-value">24</div>
+                <div>קורסים פעילים</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-user-graduate fa-2x"></i>
+                <div class="stat-value">1,248</div>
+                <div>תלמידים רשומים</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                <div class="stat-value">36</div>
+                <div>מרצים</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-check fa-2x"></i>
+                <div class="stat-value">89%</div>
+                <div>שיעור השלמה</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-book"></i>
+                    <h3>ניהול קורסים</h3>
+                </div>
+                <p>יצירה, עריכה וניהול של קורסים אקדמיים עם תוכנית לימודים מפורטת.</p>
+                <a href="#" class="btn" style="margin-top: 1rem;">נהל קורסים</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>ניהול תלמידים</h3>
+                </div>
+                <p>רישום תלמידים, מעקב אחר התקדמות והצגת פרופילים אישיים.</p>
+                <a href="#" class="btn" style="margin-top: 1rem;">צפה בסטודנטים</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-tasks"></i>
+                    <h3>מטלות והערכות</h3>
+                </div>
+                <p>יצירת מטלות, הערכה אוטומטית וניהול ציונים.</p>
+                <a href="#" class="btn" style="margin-top: 1rem;">נהל מטלות</a>
+            </div>
+        </div>
+
+        <!-- Courses Table -->
+        <h2 style="margin: 2rem 0 1rem;"><i class="fas fa-list"></i> קורסים אחרונים</h2>
+        <table class="courses-table">
+            <thead>
+                <tr>
+                    <th>שם הקורס</th>
+                    <th>מרצה</th>
+                    <th>תאריך התחלה</th>
+                    <th>תלמידים</th>
+                    <th>סטטוס</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>מבוא למדעי הנתונים</td>
+                    <td>דר' שרה כהן</td>
+                    <td>15/10/2023</td>
+                    <td>42</td>
+                    <td><span class="status active">פעיל</span></td>
+                </tr>
+                <tr>
+                    <td>פיתוח אפליקציות_WEB</td>
+                    <td>פרופ' דוד לוי</td>
+                    <td>22/10/2023</td>
+                    <td>38</td>
+                    <td><span class="status active">פעיל</span></td>
+                </tr>
+                <tr>
+                    <td>אבטחת מידע</td>
+                    <td>אריה מizrחי</td>
+                    <td>05/11/2023</td>
+                    <td>29</td>
+                    <td><span class="status pending">מתכונן</span></td>
+                </tr>
+                <tr>
+                    <td> machine learning</td>
+                    <td>דר' יעל רוזן</td>
+                    <td>01/09/2023</td>
+                    <td>51</td>
+                    <td><span class="status completed">הושלם</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Calendar -->
+        <div class="calendar">
+            <div class="calendar-header">
+                <h2><i class="fas fa-calendar-alt"></i> לוח אירועים</h2>
+                <div>
+                    <button class="btn" style="background: var(--secondary);"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day">ראשון</div>
+                <div class="calendar-day">שני</div>
+                <div class="calendar-day">שלישי</div>
+                <div class="calendar-day">רביעי</div>
+                <div class="calendar-day">חמישי</div>
+                <div class="calendar-day">שישי</div>
+                <div class="calendar-day">שבת</div>
+                
+                <!-- Calendar days would be populated dynamically -->
+                <div class="calendar-day">1</div>
+                <div class="calendar-day">2</div>
+                <div class="calendar-day">3</div>
+                <div class="calendar-day has-event">4</div>
+                <div class="calendar-day">5</div>
+                <div class="calendar-day">6</div>
+                <div class="calendar-day">7</div>
+                
+                <div class="calendar-day">8</div>
+                <div class="calendar-day">9</div>
+                <div class="calendar-day has-event">10</div>
+                <div class="calendar-day">11</div>
+                <div class="calendar-day">12</div>
+                <div class="calendar-day">13</div>
+                <div class="calendar-day">14</div>
+                
+                <div class="calendar-day">15</div>
+                <div class="calendar-day">16</div>
+                <div class="calendar-day">17</div>
+                <div class="calendar-day">18</div>
+                <div class="calendar-day has-event">19</div>
+                <div class="calendar-day">20</div>
+                <div class="calendar-day">21</div>
+                
+                <div class="calendar-day">22</div>
+                <div class="calendar-day">23</div>
+                <div class="calendar-day">24</div>
+                <div class="calendar-day">25</div>
+                <div class="calendar-day">26</div>
+                <div class="calendar-day">27</div>
+                <div class="calendar-day">28</div>
+                
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+                <div class="calendar-day"></div>
+                <div class="calendar-day"></div>
+                <div class="calendar-day"></div>
+                <div class="calendar-day"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>מערכת ניהול קורסים</h3>
+                    <p>פתרון מתקדם לניהול קורסים, תלמידים וה-resources האקדמיים במקום אחד.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>קישורים מהירים</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">דף הבית</a></li>
+                        <li><a href="#">קורסים</a></li>
+                        <li><a href="#">תלמידים</a></li>
+                        <li><a href="#">מרצים</a></li>
+                        <li><a href="#">דוחות</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>תמיכה</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">מרכז עזרה</a></li>
+                        <li><a href="#">שאלות נפוצות</a></li>
+                        <li><a href="#">הדרכה למשתמש</a></li>
+                        <li><a href="#">יצירת קשר</a></li>
+                        <li><a href="#">פורום תמיכה</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 מערכת ניהול קורסים. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interactivity for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click effect to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Calendar day interaction
+            const calendarDays = document.querySelectorAll('.calendar-day:not(:empty)');
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    // Remove active class from all days
+                    calendarDays.forEach(d => d.classList.remove('active'));
+                    // Add active class to clicked day
+                    this.classList.add('active');
+                    this.style.background = 'rgba(37, 99, 235, 0.2)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
