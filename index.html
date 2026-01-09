@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מבוא למערכות מידע וניהול נתונים</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* משתנים גלובליים */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* כותרת עליונה */
+        header {
+            background: linear-gradient(to right, var(--primary), #1a2530);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* גלריית תמונות */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%233498db"/><path d="M20,20 L80,80 M80,20 L20,80" stroke="%232c3e50" stroke-width="2"/></svg>');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: #c0392b;
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        /* קטעים */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* כרטיסיות */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-header i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-body h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* טבלאות */
+        .trends-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .trends-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .trends-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .trends-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .trends-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        /* טימלайн */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--secondary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            position: relative;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--secondary);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -8px;
+        }
+
+        /* ציטוטים */
+        .testimonials {
+            background: linear-gradient(to right, var(--primary), #1a2530);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .author {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        /* טופס יצירת קשר */
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* כותרת תחתונה */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Респונסיביות */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- כותרת עליונה -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>מבוא למערכות מידע וניהול נתונים</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">בית</a></li>
+                    <li><a href="#about">אודות הקורס</a></li>
+                    <li><a href="#trends">מגמות מתקדמות</a></li>
+                    <li><a href="#syllabus"> תוכנית הלימודים</a></li>
+                    <li><a href="#testimonials">המלצות</a></li>
+                    <li><a href="#contact">הרשמה</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- גלריית תמונות -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h2> domina את עולם מערכות המידע והנתונים</h2>
+            <p>קורס מקיף המחבר בין עקרונות יסוד לטכנולוגיות מתקדמות בניתוח נתונים, AI, Cloud Computing ועוד</p>
+            <a href="#contact" class="btn">הירשם עכשיו</a>
+        </div>
+    </section>
+
+    <!-- אודות הקורס -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>על הקורס</h2>
+                <p>קורס "מבוא למערכות מידע וניהול נתונים" נועד לספק הבנה מקיפה של התחום, מהעקרונות הבסיסיים ועד הטכנולוגיות המתקדמות ביותר</p>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book-open"></i>
+                        <h3>תוכן מקיף</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>הקורס מכסה את כל היבטי מערכות המידע, החל מהגדרות בסיסיות ועד לניתוח מערכות מורכבות.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>יישום מעשי</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>מעבדות מעשיות עם כלים מתקדמים כמו SQL, Python, Tableau ו-Power BI.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3>מומחיות</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>הקורס מועבר על ידי מומחים מובילים בתעשייה עם ניסיון של יותר מעשר שנים.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- מגמות מתקדמות -->
+    <section id="trends" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>מגמות מתקדמות בתחום</h2>
+                <p>הקורס כולל את התrends החשובים ביותר כיום בעולם מערכות מידע וניהול נתונים</p>
+            </div>
+            
+            <table class="trends-table">
+                <thead>
+                    <tr>
+                        <th>תחום</th>
+                        <th>תיאור</th>
+                        <th>חשיבות</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-brain"></i> בינה מלאכותית</td>
+                        <td>שימוש ב-AI לניתוח נתונים וקבלת החלטות</td>
+                        <td>גבוהה מאוד</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-cloud"></i> Cloud Computing</td>
+                        <td>אחסון ועיבוד נתונים בענן</td>
+                        <td>גבוהה מאוד</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-chart-line"></i> Big Data Analytics</td>
+                        <td>ניתוח מאגרי מידע גדולים</td>
+                        <td>גבוהה</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-shield-alt"></i> Cybersecurity</td>
+                        <td>אבטחת מידע והגנה על נתונים</td>
+                        <td>גבוהה מאוד</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-mobile-alt"></i> IoT</td>
+                        <td>מערכות מידע משובצות ב-IoT</td>
+                        <td>גדלה</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-robot"></i> RPA</td>
+                        <td>אוטומציה של תהליכים עסקיים</td>
+                        <td>גדלה</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- תוכנית הלימודים -->
+    <section id="syllabus">
+        <div class="container">
+            <div class="section-title">
+                <h2>תוכנית הלימודים</h2>
+                <p>הקורס מחולק למודולים שיכולים אותך מהבסיס עד לרמה המתקדמת</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>שבוע 1-2: יסודות מערכות מידע</h3>
+                        <p>הגדרות, רכיבים, סוגי מערכות, היסטוריה וتطور</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>שבוע 3-4: מאגרי נתונים</h3>
+                        <p>מודלים רלציוניים, SQL, NoSQL, MongoDB</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>שבוע 5-6: ניתוח נתונים</h3>
+                        <p>Python, Pandas, Matplotlib, Seaborn</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>שבוע 7-8: Cloud & Big Data</h3>
+                        <p>AWS, Google Cloud, Hadoop, Spark</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>שבוע 9-10: AI & Machine Learning</h3>
+                        <p>Scikit-learn, Neural Networks, Deep Learning</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>שבוע 11-12: פרויקט גמר</h3>
+                        <p>פיתוח מערכת מידע שלמה עם ניתוח נתונים</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- המלצות -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>מה אומריםסטודנטים שלנו</h2>
+                <p>הświadcויות מהעולם האמיתי</p>
+            </div>
+            
+            <div class="testimonial-card">
+                <p>"הקורס עזר לי להבין את התחום לעומק ובאופן מעשי. הידע שצברתי עזר לי להשיג עבודה בחברת הייטק מובילה."</p>
+                <p class="author">- שרה כהן, محلלת נתונים ב-Google</p>
+            </div>
+            
+            <div class="testimonial-card">
+                <p>"השילוב בין תיאוריה ליישום מעשי עם כלים מתקדמים הופך את הקורס לייחודי. המורים מקצועיים וمتאמצים."</p>
+                <p class="author">- דוד לוי, מפתח BI ב-Microsoft</p>
+            </div>
+        </div>
+    </section>
+
+    <!--הרשמה -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>הרשמה לקורס</h2>
+                <p>הירשמו עכשיו וקבלו הנחה מוקדמת!</p>
+            </div>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">שם מלא</label>
+                    <input type="text" id="name" required placeholder="הכנס שם מלא">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">אימייל</label>
+                    <input type="email" id="email" required placeholder="הכנס כתובת אימייל">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">טלפון</label>
+                    <input type="tel" id="phone" placeholder="הכנס מספר טלפון">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">הודעה</label>
+                    <textarea id="message" placeholder="שאלות או הערות נוספות"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-accent">שלח בקשה להרשמה</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- כותרת תחתונה -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>關於 הקורס</h3>
+                    <p>קורס מקיף המחבר בין עקרונות יסוד לטכנולוגיות מתקדמות בניתוח נתונים, AI, Cloud Computing ועוד.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>קישורים מהירים</h3>
+                    <ul>
+                        <li><a href="#home">דף הבית</a></li>
+                        <li><a href="#about">אודות הקורס</a></li>
+                        <li><a href="#trends">מגמות מתקדמות</a></li>
+                        <li><a href="#syllabus"> תוכנית הלימודים</a></li>
+                        <li><a href="#testimonials">המלצות</a></li>
+                        <li><a href="#contact">הרשמה</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>פרטי קשר</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> רחוב דוגמה 123, תל אביב</li>
+                        <li><i class="fas fa-phone"></i> 03-1234567</li>
+                        <li><i class="fas fa-envelope"></i> info@datasciencecourse.co.il</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 מבוא למערכות מידע וניהול נתונים. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // סקריפט פשוט לאנימציות
+        document.addEventListener('DOMContentLoaded', function() {
+            // אנימציית גלילה חלקה
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // אפקט על כרטיסיות
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // אפקט על כפתורים
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.transform = 'translateY(-3px)';
+                    button.style.boxShadow = '0 6px 15px rgba(0,0,0,0.2)';
+                });
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translateY(0)';
+                    button.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
