@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת ניהול קורסים מתקדמת</title>
+    <title>CourseMaster Pro - Modern LMS Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* משתנים וגדרות כלליות */
+        /* Modern CSS Variables */
         :root {
             --primary: #2563eb;
             --primary-dark: #1e40af;
             --secondary: #0f172a;
             --accent: #f97316;
-            --accent-dark: #ea580c;
-            --background: #f8fafc;
             --surface: #ffffff;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --text-secondary: #64748b;
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
-            --text: #1e293b;
-            --text-secondary: #64748b;
             --border: #e2e8f0;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Typography */
+            --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-display: 'Source Serif Pro', serif;
+            
+            --radius-sm: 4px;
             --radius: 8px;
             --radius-lg: 12px;
+            --radius-xl: 16px;
+            
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -36,13 +47,14 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--background);
+            font-family: var(--font-primary);
+            background: var(--background);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
+        /* Container */
         .container {
             width: 100%;
             max-width: 1400px;
@@ -50,12 +62,10 @@
             padding: 0 1.5rem;
         }
 
-        /* Header Styles */
+        /* Header */
         header {
-            background: linear-gradient(135deg, var(--secondary), #1e293b);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: var(--shadow-lg);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -64,58 +74,57 @@
 
         .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.875rem;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.5rem;
         }
 
         .logo i {
-            font-size: 2.25rem;
-            color: var(--accent);
-            background: rgba(249, 115, 22, 0.1);
-            padding: 0.5rem;
-            border-radius: var(--radius);
-        }
-
-        .logo h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--accent), #fb923c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            font-size: 2rem;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.25rem;
+            gap: 2rem;
         }
 
         nav a {
-            color: white;
             text-decoration: none;
+            color: var(--text);
             font-weight: 500;
-            padding: 0.625rem 1.25rem;
+            padding: 0.5rem 1rem;
             border-radius: var(--radius);
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            position: relative;
         }
 
         nav a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            color: var(--primary);
         }
 
         nav a.active {
-            background: rgba(37, 99, 235, 0.2);
-            border: 1px solid rgba(37, 99, 235, 0.3);
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
         }
 
         .user-actions {
@@ -128,14 +137,14 @@
             position: relative;
             padding: 0.5rem;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--background);
             cursor: pointer;
         }
 
         .notification-badge {
             position: absolute;
             top: -5px;
-            left: -5px;
+            right: -5px;
             background: var(--error);
             color: white;
             font-size: 0.75rem;
@@ -145,13 +154,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
         }
 
         .avatar {
@@ -164,13 +166,14 @@
             justify-content: center;
             color: white;
             font-weight: 600;
+            cursor: pointer;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 5rem 0;
+            padding: 4rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -182,7 +185,7 @@
             right: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
             background-size: cover;
         }
 
@@ -194,16 +197,15 @@
             z-index: 1;
         }
 
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
             font-weight: 700;
-            line-height: 1.2;
         }
 
         .hero p {
             font-size: 1.25rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             opacity: 0.9;
         }
 
@@ -225,8 +227,7 @@
         }
 
         .btn:hover {
-            background: var(--accent-dark);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
         }
 
@@ -241,82 +242,21 @@
             color: var(--primary);
         }
 
-        /* Dashboard Grid */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-header i {
-            font-size: 2rem;
-            color: var(--primary);
-            background: rgba(37, 99, 235, 0.1);
-            padding: 0.75rem;
-            border-radius: var(--radius);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--secondary);
-        }
-
-        .card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
         /* Stats Section */
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin: 3rem 0;
         }
 
         .stat-card {
             background: var(--surface);
-            border-radius: var(--radius-lg);
             padding: 2rem;
-            text-align: center;
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow);
+            text-align: center;
             transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .stat-card:hover {
@@ -337,12 +277,47 @@
             margin: 0.5rem 0;
         }
 
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1rem;
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
         }
 
-        /* Progress Bar */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -377,13 +352,6 @@
             align-items: center;
         }
 
-        .table-header h2 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
         .table-actions {
             display: flex;
             gap: 1rem;
@@ -393,8 +361,8 @@
             display: flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius);
             padding: 0.5rem 1rem;
+            border-radius: var(--radius);
         }
 
         .search-box input {
@@ -402,66 +370,38 @@
             border: none;
             color: white;
             outline: none;
-            width: 200px;
+            margin-left: 0.5rem;
         }
 
-        .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .courses-table {
+        table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .courses-table th {
-            background: #f1f5f9;
-            color: var(--secondary);
-            text-align: right;
+        th, td {
             padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f8fafc;
             font-weight: 600;
-            border-bottom: 1px solid var(--border);
+            color: var(--secondary);
         }
 
-        .courses-table td {
-            padding: 1.25rem;
-            border-bottom: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .courses-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .courses-table tr:hover td {
+        tr:hover td {
             background: #f8fafc;
         }
 
-        .course-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .course-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius);
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
         .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 0.375rem 1rem;
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
         }
 
         .status.active {
@@ -472,11 +412,6 @@
         .status.pending {
             background: rgba(245, 158, 11, 0.1);
             color: var(--warning);
-        }
-
-        .status.completed {
-            background: rgba(15, 23, 42, 0.1);
-            color: var(--secondary);
         }
 
         /* Calendar */
@@ -495,46 +430,25 @@
             margin-bottom: 2rem;
         }
 
-        .calendar-header h2 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--secondary);
-        }
-
-        .calendar-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .calendar-day-header {
             text-align: center;
             font-weight: 600;
-            color: var(--text-secondary);
             padding: 1rem 0;
             border-bottom: 1px solid var(--border);
         }
 
         .calendar-day {
             text-align: center;
-            padding: 1.25rem 0.75rem;
+            padding: 1rem;
             border-radius: var(--radius);
-            transition: var(--transition);
             cursor: pointer;
-            position: relative;
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
+            transition: var(--transition);
         }
 
         .calendar-day:hover {
@@ -542,36 +456,20 @@
         }
 
         .calendar-day.has-event {
-            background: rgba(37, 99, 235, 0.05);
-            border: 1px solid rgba(37, 99, 235, 0.1);
+            background: rgba(37, 99, 235, 0.1);
+            position: relative;
         }
 
-        .calendar-day.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .event-dot {
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 6px;
             height: 6px;
             background: var(--accent);
             border-radius: 50%;
-            margin-top: 0.25rem;
-        }
-
-        .event-count {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background: var(--error);
-            color: white;
-            font-size: 0.75rem;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         /* Footer */
@@ -584,7 +482,7 @@
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
             margin-bottom: 3rem;
         }
@@ -593,13 +491,12 @@
             margin-bottom: 1.5rem;
             position: relative;
             padding-bottom: 0.75rem;
-            font-size: 1.25rem;
         }
 
         .footer-section h3::after {
             content: '';
             position: absolute;
-            right: 0;
+            left: 0;
             bottom: 0;
             width: 50px;
             height: 3px;
@@ -618,14 +515,10 @@
             color: #94a3b8;
             text-decoration: none;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .footer-links a:hover {
             color: var(--accent);
-            padding-right: 5px;
         }
 
         .social-icons {
@@ -638,8 +531,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             color: white;
@@ -656,24 +549,13 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #94a3b8;
-            font-size: 0.875rem;
         }
 
         /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            
-            .dashboard {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-        }
-
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             nav ul {
@@ -681,61 +563,21 @@
                 justify-content: center;
             }
 
-            .hero h2 {
-                font-size: 2rem;
+            .hero h1 {
+                font-size: 2.5rem;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            .dashboard {
+                grid-template-columns: 1fr;
             }
 
             .table-header {
                 flex-direction: column;
                 gap: 1rem;
-                align-items: flex-start;
             }
 
             .table-actions {
                 width: 100%;
-                justify-content: space-between;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-
-            .search-box input {
-                width: 100%;
-            }
-
-            .calendar-grid {
-                gap: 0.5rem;
-            }
-
-            .calendar-day {
-                padding: 0.75rem 0.5rem;
-                min-height: 70px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
-                gap: 0.25rem;
-            }
-            
-            .calendar-day {
-                padding: 0.5rem 0.25rem;
-                min-height: 60px;
-                font-size: 0.875rem;
             }
         }
     </style>
@@ -746,15 +588,15 @@
         <div class="container header-content">
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
-                <h1>מערכת ניהול קורסים מתקדמת</h1>
+                <span>CourseMaster Pro</span>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" class="active"><i class="fas fa-home"></i> דף הבית</a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> קורסים</a></li>
-                    <li><a href="#"><i class="fas fa-users"></i> תלמידים</a></li>
-                    <li><a href="#"><i class="fas fa-chart-bar"></i> דוחות</a></li>
-                    <li><a href="#"><i class="fas fa-calendar"></i> לוח שנה</a></li>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Students</a></li>
+                    <li><a href="#">Assignments</a></li>
+                    <li><a href="#">Analytics</a></li>
                 </ul>
             </nav>
             <div class="user-actions">
@@ -762,11 +604,7 @@
                     <i class="fas fa-bell"></i>
                     <div class="notification-badge">3</div>
                 </div>
-                <div class="user-profile">
-                    <div class="avatar">AD</div>
-                    <span>אדמין</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
+                <div class="avatar">AD</div>
             </div>
         </div>
     </header>
@@ -774,53 +612,50 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container hero-content">
-            <h2>ניהול קורסים מתקדם בעידן הדיגיטלי</h2>
-            <p>פלטפורמה אינטואיטיבית לניהול קורסים, תלמידים, מטלות והערכות במקום אחד</p>
+            <h1>Modern Course Management System</h1>
+            <p>Streamline your educational institution with our AI-powered learning management platform</p>
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="#" class="btn"><i class="fas fa-plus-circle"></i> צור קורס חדש</a>
-                <a href="#" class="btn btn-outline"><i class="fas fa-video"></i> צפה בהדרכה</a>
+                <a href="#" class="btn"><i class="fas fa-plus"></i> Create Course</a>
+                <a href="#" class="btn btn-outline"><i class="fas fa-play"></i> Watch Demo</a>
             </div>
         </div>
     </section>
 
-    <!-- Dashboard Stats -->
-    <section class="container">
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Stats Section -->
         <div class="stats">
             <div class="stat-card">
                 <i class="fas fa-book stat-icon"></i>
                 <div class="stat-value">42</div>
-                <div class="stat-label">קורסים פעילים</div>
+                <div>Active Courses</div>
                 <div class="progress-bar">
                     <div class="progress" style="width: 85%"></div>
                 </div>
-                <div>85% תפוסה</div>
             </div>
             <div class="stat-card">
-                <i class="fas fa-user-graduate stat-icon"></i>
-                <div class="stat-value">1,842</div>
-                <div class="stat-label">תלמידים רשומים</div>
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-value">1,248</div>
+                <div>Enrolled Students</div>
                 <div class="progress-bar">
                     <div class="progress" style="width: 72%"></div>
                 </div>
-                <div>72% השלמה</div>
             </div>
             <div class="stat-card">
-                <i class="fas fa-chalkboard-teacher stat-icon"></i>
-                <div class="stat-value">58</div>
-                <div class="stat-label">מרצים פעילים</div>
+                <i class="fas fa-chart-line stat-icon"></i>
+                <div class="stat-value">89%</div>
+                <div>Completion Rate</div>
                 <div class="progress-bar">
-                    <div class="progress" style="width: 90%"></div>
+                    <div class="progress" style="width: 89%"></div>
                 </div>
-                <div>90% זמינות</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-tasks stat-icon"></i>
-                <div class="stat-value">248</div>
-                <div class="stat-label">מטלות פעילות</div>
+                <div class="stat-value">156</div>
+                <div>Active Assignments</div>
                 <div class="progress-bar">
                     <div class="progress" style="width: 65%"></div>
                 </div>
-                <div>65% שהושלמו</div>
             </div>
         </div>
 
@@ -828,275 +663,219 @@
         <div class="dashboard">
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-book-open"></i>
+                    <div class="card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
                     <div>
-                        <h3>ניהול קורסים</h3>
-                        <p>יצירה, עריכה וניהול קורסים</p>
+                        <h3>Course Management</h3>
+                        <p>Create and manage courses</p>
                     </div>
                 </div>
-                <p>ניהול מלא של קורסים אקדמיים כולל תוכנית לימודים, חומרים והודעות.</p>
-                <a href="#" class="btn" style="margin-top: 1rem;"><i class="fas fa-arrow-left"></i> גישה לניהול קורסים</a>
+                <p>Complete course management system with rich content editor, scheduling, and progress tracking.</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 75%"></div>
+                </div>
+                <a href="#" class="btn" style="margin-top: 1rem;">Manage Courses</a>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-user-graduate"></i>
+                    <div class="card-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
                     <div>
-                        <h3>ניהול תלמידים</h3>
-                        <p>רישום ומעקב אחר תלמידים</p>
+                        <h3>Student Portal</h3>
+                        <p>Student management system</p>
                     </div>
                 </div>
-                <p>ניהול פרופילי תלמידים, מעקב אחר התקדמות וסטטיסטיקות ביצועים.</p>
-                <a href="#" class="btn" style="margin-top: 1rem;"><i class="fas fa-arrow-left"></i> צפה בסטודנטים</a>
+                <p>Comprehensive student profiles, progress tracking, and communication tools.</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%"></div>
+                </div>
+                <a href="#" class="btn" style="margin-top: 1rem;">View Students</a>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-tasks"></i>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
                     <div>
-                        <h3>מטלות והערכות</h3>
-                        <p>יצירה וניהול מטלות</p>
+                        <h3>Analytics Dashboard</h3>
+                        <p>Real-time insights</p>
                     </div>
                 </div>
-                <p>יצירת מטלות, מערכת הערכה אוטומטית וניהול ציונים מתקדם.</p>
-                <a href="#" class="btn" style="margin-top: 1rem;"><i class="fas fa-arrow-left"></i> נהל מטלות</a>
+                <p>Advanced analytics and reporting with customizable dashboards.</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 45%"></div>
+                </div>
+                <a href="#" class="btn" style="margin-top: 1rem;">View Analytics</a>
             </div>
         </div>
 
         <!-- Courses Table -->
         <div class="table-container">
             <div class="table-header">
-                <h2><i class="fas fa-list"></i> קורסים אחרונים</h2>
+                <h2><i class="fas fa-list"></i> Recent Courses</h2>
                 <div class="table-actions">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="חיפוש קורס...">
+                        <input type="text" placeholder="Search courses...">
                     </div>
-                    <button class="btn"><i class="fas fa-filter"></i> סנן</button>
-                    <button class="btn"><i class="fas fa-download"></i> ייצא</button>
+                    <button class="btn"><i class="fas fa-filter"></i> Filter</button>
                 </div>
             </div>
-            <table class="courses-table">
+            <table>
                 <thead>
                     <tr>
-                        <th>קורס</th>
-                        <th>מרצה</th>
-                        <th>תאריך התחלה</th>
-                        <th>תלמידים</th>
-                        <th>התקדמות</th>
-                        <th>סטטוס</th>
+                        <th>Course Name</th>
+                        <th>Instructor</th>
+                        <th>Students</th>
+                        <th>Progress</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <div class="course-info">
-                                <div class="course-icon"><i class="fas fa-database"></i></div>
-                                <div>
-                                    <div>מבוא למדעי הנתונים</div>
-                                    <div style="font-size: 0.875rem; color: var(--text-secondary)">DS101</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>דר' שרה כהן</td>
-                        <td>15/10/2023</td>
+                        <td>Introduction to Data Science</td>
+                        <td>Dr. Sarah Johnson</td>
                         <td>42</td>
                         <td>
                             <div class="progress-bar">
                                 <div class="progress" style="width: 78%"></div>
                             </div>
-                            <div style="font-size: 0.875rem;">78%</div>
                         </td>
-                        <td><span class="status active"><i class="fas fa-circle"></i> פעיל</span></td>
+                        <td><span class="status active"><i class="fas fa-circle"></i> Active</span></td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="course-info">
-                                <div class="course-icon"><i class="fas fa-code"></i></div>
-                                <div>
-                                    <div>פיתוח אפליקציות WEB</div>
-                                    <div style="font-size: 0.875rem; color: var(--text-secondary)">WEB201</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>פרופ' דוד לוי</td>
-                        <td>22/10/2023</td>
+                        <td>Web Development Bootcamp</td>
+                        <td>Prof. Michael Chen</td>
                         <td>38</td>
                         <td>
                             <div class="progress-bar">
                                 <div class="progress" style="width: 65%"></div>
                             </div>
-                            <div style="font-size: 0.875rem;">65%</div>
                         </td>
-                        <td><span class="status active"><i class="fas fa-circle"></i> פעיל</span></td>
+                        <td><span class="status active"><i class="fas fa-circle"></i> Active</span></td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="course-info">
-                                <div class="course-icon"><i class="fas fa-shield-alt"></i></div>
-                                <div>
-                                    <div>אבטחת מידע</div>
-                                    <div style="font-size: 0.875rem; color: var(--text-secondary)">SEC301</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>אריה מזרחי</td>
-                        <td>05/11/2023</td>
+                        <td>Machine Learning Fundamentals</td>
+                        <td>Dr. Emily Rodriguez</td>
                         <td>29</td>
                         <td>
                             <div class="progress-bar">
                                 <div class="progress" style="width: 15%"></div>
                             </div>
-                            <div style="font-size: 0.875rem;">15%</div>
                         </td>
-                        <td><span class="status pending"><i class="fas fa-clock"></i> מתכונן</span></td>
+                        <td><span class="status pending"><i class="fas fa-clock"></i> Starting Soon</span></td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="course-info">
-                                <div class="course-icon"><i class="fas fa-robot"></i></div>
-                                <div>
-                                    <div>Machine Learning</div>
-                                    <div style="font-size: 0.875rem; color: var(--text-secondary)">ML401</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>דר' יעל רוזן</td>
-                        <td>01/09/2023</td>
+                        <td>Cybersecurity Essentials</td>
+                        <td>Prof. David Kim</td>
                         <td>51</td>
                         <td>
                             <div class="progress-bar">
                                 <div class="progress" style="width: 100%"></div>
                             </div>
-                            <div style="font-size: 0.875rem;">100%</div>
                         </td>
-                        <td><span class="status completed"><i class="fas fa-check"></i> הושלם</span></td>
+                        <td><span class="status active"><i class="fas fa-check"></i> Completed</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Calendar -->
+        <!-- Calendar Section -->
         <div class="calendar-section">
             <div class="calendar-header">
-                <h2><i class="fas fa-calendar-alt"></i> לוח אירועים - נובמבר 2023</h2>
-                <div class="calendar-controls">
-                    <button class="btn"><i class="fas fa-chevron-right"></i> חודש קודם</button>
-                    <button class="btn">היום</button>
-                    <button class="btn">חודש הבא <i class="fas fa-chevron-left"></i></button>
+                <h2><i class="fas fa-calendar-alt"></i> November 2023</h2>
+                <div>
+                    <button class="btn"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <button class="btn">Today</button>
+                    <button class="btn">Next <i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
             <div class="calendar-grid">
-                <div class="calendar-day-header">א'</div>
-                <div class="calendar-day-header">ב'</div>
-                <div class="calendar-day-header">ג'</div>
-                <div class="calendar-day-header">ד'</div>
-                <div class="calendar-day-header">ה'</div>
-                <div class="calendar-day-header">ו'</div>
-                <div class="calendar-day-header">ש'</div>
-                
-                <!-- Empty days for calendar alignment -->
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                
-                <!-- Calendar days -->
-                <div class="calendar-day has-event">1<div class="event-dot"></div></div>
+                <div class="calendar-day-header">Sun</div>
+                <div class="calendar-day-header">Mon</div>
+                <div class="calendar-day-header">Tue</div>
+                <div class="calendar-day-header">Wed</div>
+                <div class="calendar-day-header">Thu</div>
+                <div class="calendar-day-header">Fri</div>
+                <div class="calendar-day-header">Sat</div>
+
+                <!-- Calendar days would be populated dynamically -->
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+                <div class="calendar-day has-event">1</div>
                 <div class="calendar-day">2</div>
-                <div class="calendar-day has-event">3<div class="event-dot"></div></div>
+                <div class="calendar-day has-event">3</div>
                 <div class="calendar-day">4</div>
-                
+
                 <div class="calendar-day">5</div>
-                <div class="calendar-day has-event">6<div class="event-dot"></div></div>
+                <div class="calendar-day has-event">6</div>
                 <div class="calendar-day">7</div>
                 <div class="calendar-day">8</div>
-                <div class="calendar-day has-event">9<span class="event-count">2</span></div>
+                <div class="calendar-day has-event">9</div>
                 <div class="calendar-day">10</div>
                 <div class="calendar-day">11</div>
-                
-                <div class="calendar-day">12</div>
-                <div class="calendar-day">13</div>
-                <div class="calendar-day has-event">14<div class="event-dot"></div></div>
-                <div class="calendar-day">15</div>
-                <div class="calendar-day active">16<div class="event-dot"></div></div>
-                <div class="calendar-day">17</div>
-                <div class="calendar-day">18</div>
-                
-                <div class="calendar-day">19</div>
-                <div class="calendar-day has-event">20<div class="event-dot"></div></div>
-                <div class="calendar-day">21</div>
-                <div class="calendar-day">22</div>
-                <div class="calendar-day">23</div>
-                <div class="calendar-day has-event">24<span class="event-count">3</span></div>
-                <div class="calendar-day">25</div>
-                
-                <div class="calendar-day">26</div>
-                <div class="calendar-day">27</div>
-                <div class="calendar-day">28</div>
-                <div class="calendar-day has-event">29<div class="event-dot"></div></div>
-                <div class="calendar-day">30</div>
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
+
+                <!-- Continue calendar days... -->
             </div>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>מערכת ניהול קורסים מתקדמת</h3>
-                    <p>פלטפורמה אינטואיטיבית לניהול קורסים, תלמידים, מטלות והערכות במקום אחד עם טכנולוגיות מתקדמות.</p>
+                    <h3>CourseMaster Pro</h3>
+                    <p>Advanced learning management system for modern educational institutions.</p>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                
                 <div class="footer-section">
-                    <h3>קישורים מהירים</h3>
+                    <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> דף הבית</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> קורסים</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> תלמידים</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> מרצים</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> דוחות</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Students</a></li>
+                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">Settings</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-section">
-                    <h3>תמיכה</h3>
+                    <h3>Support</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> מרכז עזרה</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> שאלות נפוצות</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> הדרכה למשתמש</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> יצירת קשר</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-left"></i> פורום תמיכה</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-section">
-                    <h3>יצירת קשר</h3>
+                    <h3>Legal</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> רחוב הנשיא 123, תל אביב</a></li>
-                        <li><a href="#"><i class="fas fa-phone"></i> 03-1234567</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> info@cms.co.il</a></li>
-                        <li><a href="#"><i class="fas fa-clock"></i> א-ה 8:00-18:00</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR Compliance</a></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="copyright">
-                <p>&copy; 2023 מערכת ניהול קורסים מתקדמת. כל הזכויות שמורות.</p>
+                <p>&copy; 2023 CourseMaster Pro. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Interactive JavaScript for the course management system
+        // Interactive JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             // Card hover effects
             const cards = document.querySelectorAll('.card, .stat-card');
@@ -1118,37 +897,14 @@
                 button.addEventListener('mouseup', function() {
                     this.style.transform = 'scale(1)';
                 });
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = 'scale(1)';
-                });
             });
 
             // Calendar day selection
-            const calendarDays = document.querySelectorAll('.calendar-day:not(:empty)');
+            const calendarDays = document.querySelectorAll('.calendar-day');
             calendarDays.forEach(day => {
                 day.addEventListener('click', function() {
-                    // Remove active class from all days
-                    calendarDays.forEach(d => d.classList.remove('active'));
-                    // Add active class to clicked day
-                    this.classList.add('active');
-                });
-            });
-
-            // Notification bell animation
-            const notification = document.querySelector('.notification');
-            notification.addEventListener('click', function() {
-                this.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 300);
-            });
-
-            // Table row highlight
-            const tableRows = document.querySelectorAll('.courses-table tr');
-            tableRows.forEach(row => {
-                row.addEventListener('click', function() {
-                    tableRows.forEach(r => r.classList.remove('selected'));
-                    this.classList.add('selected');
+                    calendarDays.forEach(d => d.style.background = '');
+                    this.style.background = 'rgba(37, 99, 235, 0.2)';
                 });
             });
 
@@ -1156,7 +912,7 @@
             const searchInput = document.querySelector('.search-box input');
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase();
-                const rows = document.querySelectorAll('.courses-table tbody tr');
+                const rows = document.querySelectorAll('tbody tr');
                 
                 rows.forEach(row => {
                     const text = row.textContent.toLowerCase();
@@ -1168,28 +924,14 @@
                 });
             });
 
-            // Progress bar animation on scroll
-            const observerOptions = {
-                threshold: 0.5
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const progressBars = entry.target.querySelectorAll('.progress');
-                        progressBars.forEach(bar => {
-                            const width = bar.style.width;
-                            bar.style.width = '0';
-                            setTimeout(() => {
-                                bar.style.width = width;
-                            }, 300);
-                        });
-                    }
-                });
-            }, observerOptions);
-
-            const statsSection = document.querySelector('.stats');
-            observer.observe(statsSection);
+            // Notification bell animation
+            const notification = document.querySelector('.notification');
+            notification.addEventListener('click', function() {
+                this.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 300);
+            });
         });
     </script>
 </body>
